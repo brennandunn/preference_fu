@@ -39,10 +39,14 @@ For new AR objects, all preference options will be set to false. This can be ove
 Setting a preference:
 	...individually
 	@user.preferences[:delete_user] = true 
-	
+		
 	...mass assignment (useful with the params hash)
 	@user.preferences = {:delete_user => true, :create_user => true}
 	
+Setting an option as true doesn't necessarily need to be done with the Boolean true - in fact, the Fixnum 1, and strings '1', 'y' and 'yes' are all valid. This is particularly helpful for checkbox form posts.
+
+ 	@user.preferences[:create_user] = 'yes'
+
 
 Fetching a preference:
 	@user.preferences[:change_theme]  => false

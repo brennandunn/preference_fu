@@ -46,4 +46,11 @@ class PreferenceFuTest < Test::Unit::TestCase
     assert_equal [true, true, false, false], @new_person.prefs.map { |k, v| v }
   end
   
+  def test_various_ways_of_stating_truth
+    [true, 1, '1', 'y', 'yes', 'Y', 'YES'].each do |val|
+      @person.prefs[:change_theme] = val
+      assert_equal true, @person.prefs[:change_theme]
+    end
+  end
+  
 end

@@ -118,7 +118,7 @@ module PreferenceFu
     
     def []=(key, value)
       idx, hsh = lookup(key)
-      instance_variable_set("@#{key}", value)
+      instance_variable_set("@#{key}", is_true(value))
       update_permissions
     end
     
