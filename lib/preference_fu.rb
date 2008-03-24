@@ -47,10 +47,16 @@ module PreferenceFu
       @preferences_object ||= Preferences.new(read_attribute(preferences_column.to_sym), self)
     end
     
+    def preferences=(prefs)
+      preferences.store(prefs)
+    end
+    
   end
   
   
   class Preferences
+    
+    include Enumerable
     
     attr_accessor :instance, :options
     
@@ -73,6 +79,16 @@ module PreferenceFu
       
     end
     
+    def each
+      @options.each_value do |hsh|
+        yield hsh[:key], self[hsh[:key]]
+      end
+    end
+    
+    def size
+      @options.size
+    end
+    
     def [](key)
       instance_variable_get("@#{key}")
     end
@@ -81,6 +97,13 @@ module PreferenceFu
       idx, hsh = lookup(key)
       instance_variable_set("@#{key}", value)
       update_permissions
+    end
+    
+    # used for mass assignment of preferences, such as a hash from params
+    def store(prefs)
+      prefs.each do |key, value|
+        self[key] = value
+      end if prefs.respond_to?(:each)
     end
     
     def to_i
@@ -113,96 +136,3 @@ module PreferenceFu
     receiver.send :include, InstanceMethods
   end
 end
-
-# module PreferenceFu
-#     
-#   def has_preferences(*attrs)
-#     
-#     class_eval do
-#       
-#       Preferences.set_options = *attrs
-#             
-#       composed_of :preferences, :class_name => 'PreferenceFu::Preferences'
-#       
-#     end
-#     
-#   end
-#   
-#   class Preferences
-#         
-#     cattr_accessor :options
-#     
-#     class << self
-#       
-#       def set_options=(hsh)
-#         idx = 0; @@options = {}
-#         hsh.each do |pref, default|
-#           @@options[2**idx] = { :key => pref.to_sym, :default => default }
-#           attr_reader pref.to_sym
-#           idx += 1
-#         end
-#         
-#         @@options
-#       end
-#       
-#     end
-#     
-#     def initialize(prefs)
-#       if prefs.nil? or prefs.is_a?(Hash)
-#         @@options.each do |idx, hsh|
-#           instance_variable_set("@#{hsh[:key]}", hsh[:default])
-#         end
-#       end
-#       
-#       if prefs.is_a?(Hash)
-#         prefs.each do |key, value|
-#           instance_variable_set("@#{key}", true) if is_true(value)
-#         end
-#       elsif prefs.is_a?(Numeric)  
-#         @@options.each do |idx, hsh|
-#           instance_variable_set("@#{hsh[:key]}", (prefs & idx) != 0 ? true : false)
-#         end
-#       end
-#       
-#     end
-#     
-#     def [](key)
-#       # true if key exists and is true
-#       instance_variable_get("@#{key}")
-#     end
-#     
-#     def set(key, value)
-#       # composed_of is immutable, and thus can only update with a new object
-#       # idx, hsh = lookup(key)
-#       # if idx
-#       #   @@options[idx][:value] = value
-#       #   instance_variable_set("@#{key}", value)
-#       # end
-#       Preferences.new(:download_stuff => true)
-#     end
-# 
-#     def to_hash
-#       @@options
-#     end
-#     
-#     def preferences
-#       @@options.inject(0) do |bv, (idx, hsh)|
-#         bv |= instance_variable_get("@#{hsh[:key]}") ? idx : 0
-#       end
-#     end
-#     
-#     private
-#       def is_true(value)
-#         case value
-#         when true, 1, /1|y|yes/i then true
-#         else false
-#         end
-#       end
-#       
-#       def lookup(key)
-#         @@options.find { |idx, hsh| hsh[:key] == key.to_sym }
-#       end
-#     
-#   end
-#   
-# end
