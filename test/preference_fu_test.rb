@@ -42,7 +42,7 @@ class PreferenceFuTest < Test::Unit::TestCase
     @person.prefs[:change_theme] = true
     @person.save
     
-    @new_person = @person.reload
+    @new_person = Person.find(:first)
     assert_equal [true, true, false, false], @new_person.prefs.map { |k, v| v }
   end
   

@@ -20,12 +20,6 @@ module PreferenceFu
       
       config = { :column => 'preferences' }
       
-      %w(options instance).each do |reserved|
-        if options.include?(reserved.to_sym)
-          raise ArgumentError.new("Cannot use reserved key '#{reserved}' as a preference")
-        end
-      end
-      
       idx = 0; @@preference_options = {}
       options.each do |pref|
         @@preference_options[2**idx] = { :key => pref.to_sym, :default => false }
