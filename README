@@ -1,12 +1,9 @@
 PreferenceFu
 ============
 
-This plugin, greatly inspired by Jim Morris' blog post (http://blog.wolfman.com/articles/2007/08/07/bit-vector-preferences) 
-aims to make it easy and flexible to store boolean preferences for an ActiveRecord model. This can be also used as a very 
-quick way to setup an ACL.
+This plugin, greatly inspired by Jim Morris' blog post (http://blog.wolfman.com/articles/2007/08/07/bit-vector-preferences) aims to make it easy and flexible to store boolean preferences for an ActiveRecord model. This can be also used as a very quick way to setup an ACL.
 
-Because the values are stored within a bit vector, a virtually unlimited number of preferences can be created without additional 
-migrations.
+Because the values are stored within a bit vector, a virtually unlimited number of preferences can be created without additional  migrations.
 
 Feel free to email me with any suggestions or problems.
 
@@ -17,8 +14,7 @@ Email address: me@brennandunn.com
 Setup
 =====
 
-Simply add an integer column to each table of the database that requires preferences. By default, the column used is 
-'preferences', but by defining a method called preferences_column this can be modified.
+Simply add an integer column to each table of the database that requires preferences. By default, the column used is 'preferences', but by defining a method called preferences_column this can be modified.
 
 	def preferences_column
 		'other_column'
@@ -38,8 +34,7 @@ Using PreferenceFu is very simple.
 	
 	end
 	
-For new AR objects, all preference options will be set to false. This can be overwritten using set_default_preference. I 
-really recommend you read the 'Warning' section below.
+For new AR objects, all preference options will be set to false. This can be overwritten using set_default_preference. I really recommend you read the 'Warning' section below.
 
 Setting a preference:
 	...individually
@@ -64,10 +59,7 @@ Enumerable...
 Warning
 =======
 
-This works by taking the index of the splat supplied in has_preferences as the power of two, summing all values, and storing 
-the sum in the preferences column. Because of this, the first item in the splat will be identified by 1, the second by 2, the 
-third by 4, etc. Once you start using PreferenceFu in production, add new options to the *end* of the splat. At the moment, 
-there's no safe way to delete a preference item at the moment. Any advice is welcome! 
+This works by taking the index of the splat supplied in has_preferences as the power of two, summing all values, and storing the sum in the preferences column. Because of this, the first item in the splat will be identified by 1, the second by 2, the third by 4, etc. Once you start using PreferenceFu in production, add new options to the *end* of the splat. At the moment, there's no safe way to delete a preference item at the moment. Any advice is welcome! 
 
 	
 
