@@ -1,17 +1,23 @@
 module PreferenceFu
   
   def self.included(receiver)
-    return if receiver.included_modules.include?(PreferenceFu::InstanceMethods)
+    #return if receiver.included_modules.include?(PreferenceFu::InstanceMethods)
     
     receiver.extend         ClassMethods
     receiver.send :include, InstanceMethods
-    
-    receiver.send :alias_method_chain, :initialize, :preferences
   end
   
   module ClassMethods
         
     def has_preferences(*options)
+      alias_method_chain :initialize, :preferences
+      
+      class_eval do
+        class << self
+          alias_method_chain :instantiate, :preferences
+        end
+      end
+      
       config = { :column => 'preferences' }
       
       %w(options instance).each do |reserved|
@@ -48,22 +54,28 @@ module PreferenceFu
       @@preference_options
     end
     
+    def instantiate_with_preferences(*args)
+      record = instantiate_without_preferences(*args)
+      record.prefs
+      record
+    end
+    
   end
   
   module InstanceMethods
     
     def initialize_with_preferences(attributes = nil)
       initialize_without_preferences(attributes)
-      preferences # use this to trigger update_permissions in Preferences
+      prefs # use this to trigger update_permissions in Preferences
       yield self if block_given?
     end
     
-    def preferences
+    def prefs
       @preferences_object ||= Preferences.new(read_attribute(preferences_column.to_sym), self)
     end
     
-    def preferences=(prefs)
-      preferences.store(prefs)
+    def prefs=(hsh)
+      prefs.store(hsh)
     end
     
   end
