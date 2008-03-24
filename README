@@ -1,7 +1,7 @@
 PreferenceFu
 ============
 
-This plugin, greatly inspired by Jim Morris' blog post (http://blog.wolfman.com/articles/2007/08/07/bit-vector-preferences) aims to make it easy and flexible to store boolean preferences for an ActiveRecord model. This can be also used as a very quick way to setup an ACL.
+This plugin, greatly inspired by Jim Morris' blog post (http://blog.wolfman.com/articles/2007/08/07/bit-vector-preferences), aims to make it easy and flexible to store boolean preferences for an ActiveRecord model. This can be also used as a very quick way to setup an ACL.
 
 Because the values are stored within a bit vector, a virtually unlimited number of preferences can be created without additional  migrations.
 

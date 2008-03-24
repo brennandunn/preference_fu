@@ -1,5 +1,14 @@
 module PreferenceFu
   
+  def self.included(receiver)
+    return if receiver.included_modules.include?(PreferenceFu::InstanceMethods)
+    
+    receiver.extend         ClassMethods
+    receiver.send :include, InstanceMethods
+    
+    receiver.send :alias_method_chain, :initialize, :preferences
+  end
+  
   module ClassMethods
         
     def has_preferences(*options)
@@ -43,6 +52,12 @@ module PreferenceFu
   
   module InstanceMethods
     
+    def initialize_with_preferences(attributes = nil)
+      initialize_without_preferences(attributes)
+      preferences # use this to trigger update_permissions in Preferences
+      yield self if block_given?
+    end
+    
     def preferences
       @preferences_object ||= Preferences.new(read_attribute(preferences_column.to_sym), self)
     end
@@ -76,6 +91,8 @@ module PreferenceFu
       else
         raise(ArgumentError, "Input must be numeric")
       end
+      
+      update_permissions
       
     end
     
@@ -131,8 +148,4 @@ module PreferenceFu
     
   end
   
-  def self.included(receiver)
-    receiver.extend         ClassMethods
-    receiver.send :include, InstanceMethods
-  end
 end
