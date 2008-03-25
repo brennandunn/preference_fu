@@ -122,6 +122,11 @@ module PreferenceFu
       update_permissions
     end
     
+    def index(key)
+      idx, hsh = lookup(key)
+      idx
+    end
+    
     # used for mass assignment of preferences, such as a hash from params
     def store(prefs)
       prefs.each do |key, value|

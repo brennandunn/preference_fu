@@ -53,4 +53,8 @@ class PreferenceFuTest < Test::Unit::TestCase
     end
   end
   
+  def test_lookup_index_of_key
+    assert_equal 4, @person.prefs.index(:delete_user)
+  end
+  
 end

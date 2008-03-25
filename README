@@ -40,7 +40,7 @@ Using PreferenceFu is very simple.
 	
 For new AR objects, all preference options will be set to false. This can be overwritten using set_default_preference. I really recommend you read the 'Warning' section below.
 
-Setting a preference:
+Setting a key:
 	...individually
 	@user.prefs[:delete_user] = true 
 		
@@ -52,8 +52,12 @@ Setting an option as true doesn't necessarily need to be done with the Boolean t
  	@user.prefs[:create_user] = 'yes'
 
 
-Fetching a preference:
+Fetching a key:
 	@user.prefs[:change_theme]  => false
+	
+
+Getting the index of a key:
+	@user.prefs.index(:delete_user)  => 4
 	
 
 Enumerable...
