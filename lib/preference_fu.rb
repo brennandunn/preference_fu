@@ -8,21 +8,22 @@ module PreferenceFu
   end
   
   module ClassMethods
-        
+    
     def has_preferences(*options)
       alias_method_chain :initialize, :preferences
       
       class_eval do
         class << self
           alias_method_chain :instantiate, :preferences
+          attr_accessor :preference_options
         end
       end
       
       config = { :column => 'preferences' }
       
-      idx = 0; @@preference_options = {}
+      idx = 0; self.preference_options = {}
       options.each do |pref|
-        @@preference_options[2**idx] = { :key => pref.to_sym, :default => false }
+        self.preference_options[2**idx] = { :key => pref.to_sym, :default => false }
         idx += 1
       end
       
@@ -42,10 +43,6 @@ module PreferenceFu
       if idx
         preference_options[idx][:default] = default
       end
-    end
-    
-    def preference_options
-      @@preference_options
     end
     
     def instantiate_with_preferences(*args)
