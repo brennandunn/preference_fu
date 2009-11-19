@@ -22,6 +22,11 @@ class PreferenceFuTest < Test::Unit::TestCase
     assert_equal 1, @person.read_attribute(:preferences)
   end
   
+  def test_changing_the_default_preference_column
+    klass = Class.new(ActiveRecord::Base) { include PreferenceFu ; has_preferences :foo, :column => 'something_else' }
+    assert_equal 'something_else', klass.preferences_column
+  end
+  
   def test_changing_of_preference
     assert_equal false, @person.prefs[:delete_user]
     @person.prefs[:delete_user] = true

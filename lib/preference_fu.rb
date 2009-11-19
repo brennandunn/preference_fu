@@ -1,15 +1,13 @@
 module PreferenceFu
   
   def self.included(receiver)
-    #return if receiver.included_modules.include?(PreferenceFu::InstanceMethods)
-    
     receiver.extend         ClassMethods
     receiver.send :include, InstanceMethods
   end
   
   module ClassMethods
     
-    def has_preferences(*options)
+    def has_preferences(*prefs)
       alias_method_chain :initialize, :preferences
       
       class_eval do
@@ -19,21 +17,17 @@ module PreferenceFu
         end
       end
       
-      config = { :column => 'preferences' }
+      options = prefs.extract_options!
+      @config = { :column => 'preferences' }.merge(options)
       
-      idx = 0; self.preference_options = {}
-      options.each do |pref|
+      self.preference_options = {}
+      prefs.each_with_index do |pref, idx|
         self.preference_options[2**idx] = { :key => pref.to_sym, :default => false }
-        idx += 1
       end
       
-      class_eval <<-EOV
-
-      def preferences_column
-        '#{config[:column]}'
+      class << self
+        define_method(:preferences_column) { @config[:column] }
       end
-
-      EOV
             
     end
     
@@ -59,6 +53,10 @@ module PreferenceFu
       initialize_without_preferences(attributes)
       prefs # use this to trigger update_permissions in Preferences
       yield self if block_given?
+    end
+    
+    def preferences_column
+      self.class.preferences_column
     end
     
     def prefs
