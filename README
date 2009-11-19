@@ -14,11 +14,9 @@ Email address: me@brennandunn.com
 Setup
 =====
 
-Simply add an integer column to each table of the database that requires preferences. By default, the column used is 'preferences', but by defining a method called preferences_column this can be modified.
-
-	def preferences_column
-		'other_column'
-	end
+Simply add an integer column to each table of the database that requires preferences. By default, the column used is 'preferences', and can be changed using an options hash when defining preferences:
+  
+  has_preferences :send_email, :column => 'something_else'
 
 Your migration should probably look something like this:
 	
