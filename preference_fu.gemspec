@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "init.rb",
     "install.rb",
     "lib/preference_fu.rb",
+    "preference_fu.gemspec",
     "tasks/preference_fu_tasks.rake",
     "test/abstract_unit.rb",
     "test/person.rb",
