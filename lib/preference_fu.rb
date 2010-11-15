@@ -138,7 +138,7 @@ module PreferenceFu
     private
     
       def update_permissions
-        instance.write_attribute(instance.preferences_column, self.to_i)
+        instance.send("#{instance.preferences_column}=",self.to_i)
       end
     
       def is_true(value)
