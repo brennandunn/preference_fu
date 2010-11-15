@@ -3,7 +3,6 @@ begin
 rescue LoadError
   require 'rubygems'
   require 'active_record'
-  gem 'activerecord'
 end
 
 require 'preference_fu'

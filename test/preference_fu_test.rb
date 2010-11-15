@@ -1,6 +1,6 @@
 require 'test/unit'
-require File.join(File.dirname(__FILE__), 'abstract_unit')
-require File.join(File.dirname(__FILE__), 'person')
+require File.expand_path(File.join(File.dirname(__FILE__), 'abstract_unit'))
+require File.expand_path(File.join(File.dirname(__FILE__), 'person'))
 
 
 class PreferenceFuTest < Test::Unit::TestCase
@@ -60,6 +60,12 @@ class PreferenceFuTest < Test::Unit::TestCase
   
   def test_lookup_index_of_key
     assert_equal 4, @person.prefs.index(:delete_user)
+  end
+  
+  def test_instance_preference_method
+    @person.prefs[:change_theme]=true
+    @person.save
+    assert_equal true,Person.find(@person.id).change_theme
   end
   
 end

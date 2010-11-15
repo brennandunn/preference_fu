@@ -18,11 +18,18 @@ module PreferenceFu
       end
       
       options = prefs.extract_options!
+      preference_names=prefs-options.keys
       @config = { :column => 'preferences' }.merge(options)
       
       self.preference_options = {}
       prefs.each_with_index do |pref, idx|
         self.preference_options[2**idx] = { :key => pref.to_sym, :default => false }
+      end
+      
+      preference_names.each do |pref|        
+        define_method(pref.to_sym) {self.prefs[pref.to_sym]}
+        define_method((pref.to_s+'?').to_sym) {send pref.to_sym}
+        define_method((pref.to_s+'=').to_sym) {|a| self.prefs[pref.to_sym]=a}
       end
       
       class << self
