@@ -155,3 +155,4 @@ module PreferenceFu
   end
   
 end
+ActiveRecord::Base.class_eval { include PreferenceFu }
