@@ -1,0 +1,8 @@
+*~
+.bundle
+.DS_Store
+*.swp
+.idea/*
+*.rails2
+*.back
+pkg/*
