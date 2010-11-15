@@ -37,5 +37,6 @@ Jeweler::Tasks.new do |gem|
   gem.email = ""
   gem.homepage = "http://github.com/g5search/preference_fu"
   gem.authors = ["Brennan Dunn"]                           
-  gem.has_rdoc=true
-end
+  gem.has_rdoc=true 
+end                 
+Jeweler::GemcutterTasks.new
