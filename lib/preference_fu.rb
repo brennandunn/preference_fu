@@ -88,7 +88,7 @@ module PreferenceFu
       @options = instance.class.preference_options
       
       # setup defaults if prefs is nil
-      if prefs.nil?
+      if @instance.new_record?
         @options.each do |idx, hsh|
           instance_variable_set("@#{hsh[:key]}", hsh[:default])
         end
