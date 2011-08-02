@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{preference_fu}
-  s.version = "0.0.3"
+  s.version = "0.0.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brennan Dunn"]
-  s.date = %q{2010-11-15}
+  s.date = %q{2011-08-02}
   s.description = %q{This plugin, greatly inspired by Jim Morris' blog post (http://blog.wolfman.com/articles/2007/08/07/bit-vector-preferences), aims to make it easy and flexible to store boolean preferences for an ActiveRecord model.This can be also used as a very quick way to setup an ACL.  Because the values are stored within a bit vector, a virtually unlimited number of preferences can be created without additional  migrations.}
   s.email = %q{}
   s.extra_rdoc_files = [
@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = %q{http://github.com/g5search/preference_fu}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.6.2}
   s.summary = %q{Rails 3 compatible plugin gem for boolean preferences for an ActiveRecord model}
   s.test_files = [
     "test/abstract_unit.rb",
@@ -44,7 +44,6 @@ Gem::Specification.new do |s|
   ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
