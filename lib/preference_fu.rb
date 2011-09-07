@@ -49,8 +49,8 @@ module PreferenceFu
   
   module InstanceMethods
     
-    def initialize_with_preferences(attributes = nil)
-      initialize_without_preferences(attributes)
+    def initialize_with_preferences(*args)
+      initialize_without_preferences(*args)
       prefs # use this to trigger update_permissions in Preferences
       yield self if block_given?
     end
@@ -138,7 +138,7 @@ module PreferenceFu
     private
     
       def update_permissions
-        instance.write_attribute(instance.preferences_column, self.to_i)
+        instance.update_attribute(instance.preferences_column, self.to_i)
       end
     
       def is_true(value)
