@@ -43,6 +43,13 @@ class PreferenceFuTest < Test::Unit::TestCase
     assert_equal 4, @person.prefs.size
   end
   
+  def test_creating_and_loading
+    Person.create
+    
+    @new_person = Person.find(:first)
+    assert_equal [true, false, false, false], @new_person.prefs.map { |k, v| v }
+  end
+
   def test_saving_and_loading
     @person.prefs[:change_theme] = true
     @person.save
